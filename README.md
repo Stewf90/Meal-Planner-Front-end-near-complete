@@ -1,3 +1,11 @@
+Download the code as a zip.
+Unzip
+Open folder in workspace in Visual Studio Code
+Open terminal and type npm i, hit enter
+Once that is done, type npm start, hit enter
+The website should then load.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
