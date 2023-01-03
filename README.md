@@ -1,6 +1,6 @@
 1) Download the code as a zip.
  2) Unzip.
- 3) Open folder in workspace in Visual Studio Code.
+ 3) Open folder as a workspace in Visual Studio Code.
  4) Open terminal and type npm i, hit enter.
  5) Once that is done, type npm start, hit enter.
  6) The website should then load.
