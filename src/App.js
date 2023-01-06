@@ -5,14 +5,44 @@ import { collection, onSnapshot, doc, addDoc } from "firebase/firestore"
 // import emailjs from '@emailjs/browser';
 import './App.css';
 
+// const ContactUs = () => {
+//   const form = useRef();
+
+//   const sendEmail = (e) => {
+//     e.preventDefault();
+
+//     emailjs.sendForm('gmail', 'template_y9jsyrz', form.current, 'YcqFhqI8Ph6LHCMSZ')
+//       .then((result) => {
+//           console.log(result.text);
+//       }, (error) => {
+//           console.log(error.text);
+//       });
+//   };
+
+//   return (
+//     <form ref={form} onSubmit={sendEmail}>
+      
+//       <label>Email</label>
+//       <input type="email" name="user_email" />
+//       <label>Message</label>
+//       <textarea getElementById="choicesList" name="ingre" />
+//       <input type="submit" value="Send" />
+//     </form>
+//   );
+// };
+
+
 function App() {
+  
 const choicesColRef = collection(db, "choices")
 const mealsColRef = collection(db, "meals")
 useEffect(() => {
   onSnapshot(mealsColRef, snapshot => {
     setMeals(snapshot.docs.map(doc => {
       return {
-        id: doc.id,  
+        id: doc.id,
+        //show: false,
+        
          name:doc.data().name,
          calories:doc.data().calories,
          ingredients:doc.data().ingredients,
@@ -22,11 +52,16 @@ useEffect(() => {
     }))
   })
 }, [])
+
+
+
 useEffect(() => {
   onSnapshot(choicesColRef, snapshot => {
     setChoices(snapshot.docs.map(doc => {
       return {
         id: doc.id,
+        //show: false,
+        
          name:doc.data().name,
          source:doc.data().source,
          ingredients:doc.data().ingredients,
@@ -36,6 +71,26 @@ useEffect(() => {
   })
 }, [])
 
+// const imageColRef = collection(storage, "uploads")
+// useEffect(() => {
+//   onSnapshot(imageColRef, snapshot => {
+//     setMeals(snapshot.docs.map(doc => {
+//       return {
+//         id: doc.id,
+//         show: false,
+        
+         
+//          image:doc.data().image
+//       }
+//     }))
+//   })
+// }, [])
+
+
+
+
+
+
 //constant variables and functions
 
   const [meals, setMeals] = useState([])
@@ -43,6 +98,9 @@ useEffect(() => {
   const ingredientPlace = useRef(null)
   const [addIngredient, setAddIngredient] =useState('')
   const [ingredients, setIngredients] = useState([])
+  //const [imageForm, setImageForm] = useState({
+    //image: null
+//  })
   const [form, setForm] = useState({
     name: "",
     calories: 0,
@@ -63,7 +121,7 @@ useEffect(() => {
       form.image === ""
     ) 
     {
-      alert("Please fill the fields")
+      alert("All fields need to be filled")
       return
     }
 
@@ -109,11 +167,15 @@ useEffect(() => {
   const handleAddToList = () => {
     document.getElementById("choicesName").innerHTML = form.name.value
     document.getElementById("choicesList").innerHTML = form.ingredients.value
- 
+    
   }
+    
+ 
+
+ 
   return (
     <div className="App">
-      
+      {/* // maybe make 2 nav bars one for each button */}
       <nav>
      <h1><button onClick={() => setPopupActive(!popupActive)} className="add">Add Meal</button>Our Meals
      <button onClick={() => setPopupActive2(!popupActive2)} className="show">Show Selections</button></h1>
@@ -161,8 +223,10 @@ useEffect(() => {
           ))
           }
           <button type="button" onClick={handleIng}>Add ingredient</button>
+         
         </label>
 
+          
           </div>
         
           <div className="formTitle">
@@ -171,11 +235,16 @@ useEffect(() => {
           <input
           type="text"
           value ={form.source} onChange= {e => setForm({...form, source:e.target.value})}
-          
+          required
           />
         </label>
           </div>
 
+
+
+
+
+          
           <br></br>
         <div className="formTitle">
         <label for="image">Choose file to upload:</label>
@@ -186,7 +255,12 @@ useEffect(() => {
             />
             <br></br>
             <button className="send">Submit</button>
+        
+          
             </div>
+         
+        
+
       </form>
 
       
